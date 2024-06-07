@@ -1,27 +1,18 @@
 <!--
  * @Version    : v1.00
- * @Author     : wangchao
- * @Date       : 2024-06-07 16:17
- * @LastAuthor : wangchao
- * @LastTime   : 2024-06-07 17:22
- * @desc       : 
--->
-<!--
- * @Version    : v1.00
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2024-04-19 14:08
+ * @LastTime   : 2024-06-08 01:02
  * @desc       : 
 -->
 <script setup>
-  import { ref, onMounted } from "vue";
-  import { bitable, FieldType, DateFormatter } from "@lark-base-open/js-sdk";
-  import { ElMessage, ElMessageBox } from "element-plus";
-  import find from "../utils";
+  import { ref, onMounted } from 'vue';
+  import { bitable, FieldType, DateFormatter } from '@lark-base-open/js-sdk';
+  import { ElMessage, ElMessageBox } from 'element-plus';
 
-  import MonacoEditor from "./MonacoEditor.vue";
-  import { useI18n } from "vue-i18n";
+  import MonacoEditor from './MonacoEditor.vue';
+  import { useI18n } from 'vue-i18n';
 
   const { t } = useI18n();
 
@@ -41,24 +32,24 @@
   async function confirm() {
     if (!appName.value) {
       ElMessage({
-        type: "error",
-        message: "请输入应用名字",
+        type: 'error',
+        message: '请输入应用名字',
       });
       return;
     }
 
     if (!fieldId.value) {
       ElMessage({
-        type: "error",
-        message: "请选择原始列",
+        type: 'error',
+        message: '请选择原始列',
       });
       return;
     }
 
     if (!areaId.value) {
       ElMessage({
-        type: "error",
-        message: "请选择目标列",
+        type: 'error',
+        message: '请选择目标列',
       });
       return;
     }
@@ -104,36 +95,34 @@
 
     loading.value = false;
     ElMessage({
-      message: t("Data processing completed"),
-      type: "success",
+      message: t('Data processing completed'),
+      type: 'success',
     });
   }
 
   const MonacoEditorRef = ref();
 
-  const appName = ref("万能转换器");
+  const appName = ref('万能转换器');
 
   const upload = () => {};
 
   const download = () => {
-    console.log("MonacoEditorRef.value?.editor", MonacoEditorRef.value?.getEditorValue());
-
     const obj = {
-      appName: app.value,
-      codeValue: MonacoEditorRef.value?.editor.getValue(),
+      appName: appName.value,
+      codeValue: MonacoEditorRef.value?.getEditorValue(),
     };
 
     // 将数据转换为 JSON 格式
     let jsonData = JSON.stringify(obj, null, 2);
 
     // 创建一个 Blob 对象
-    let blob = new Blob([jsonData], { type: "application/json" });
+    let blob = new Blob([jsonData], { type: 'application/json' });
 
     // 创建一个链接
     let url = URL.createObjectURL(blob);
 
     // 创建一个链接元素
-    let a = document.createElement("a");
+    let a = document.createElement('a');
     a.href = url;
     a.download = `${appName.value}`; // 文件名
 
@@ -223,7 +212,7 @@
       @click="confirm"
     >
       <el-icon size="22"><CaretRight /></el-icon>
-      {{ $t("run") }}</el-button
+      {{ $t('run') }}</el-button
     >
   </div>
 </template>
@@ -236,7 +225,7 @@
     width: 100px;
 
     &::before {
-      content: "*";
+      content: '*';
       color: red;
       margin-right: 5px;
     }
