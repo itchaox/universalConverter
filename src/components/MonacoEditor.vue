@@ -11,6 +11,16 @@
 <script setup>
   import { ref, onMounted, watch } from 'vue';
   import * as monaco from 'monaco-editor';
+  import { bitable } from '@lark-base-open/js-sdk';
+  const theme = ref('');
+
+  onMounted(async () => {
+    theme.value = await bitable.bridge.getTheme();
+  });
+
+  bitable.bridge.onThemeChange((event) => {
+    theme.value = event.data.theme;
+  });
 
   // 定义 props
   const props = defineProps({
@@ -43,6 +53,20 @@
         const currentValue = editor.getValue();
         if (currentValue !== newValue) {
           editor.setValue(newValue);
+        }
+      }
+    },
+  );
+
+  watch(
+    () => theme.value,
+    (newValue) => {
+      if (editor) {
+        console.log(newValue);
+        if (newValue === 'DARK') {
+          monaco.editor.setTheme('vs-dark');
+        } else {
+          monaco.editor.setTheme('vs');
         }
       }
     },
