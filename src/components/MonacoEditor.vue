@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, watchEffect, watch } from 'vue';
+  import { ref, onMounted, watch } from 'vue';
   import * as monaco from 'monaco-editor';
 
   // 定义 props
@@ -22,7 +22,7 @@
   let editor = null;
 
   const defaultValue = `function helloWorld(data) {
-    const res = data + '成功了！！！'
+    const res = data + 'some message!'
     return res
   }`;
 

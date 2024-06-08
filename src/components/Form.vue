@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2024-06-08 13:32
+ * @LastTime   : 2024-06-08 14:21
  * @desc       : 
 -->
 <script setup>
@@ -245,7 +245,7 @@
       >
     </div>
     <div class="line">
-      <div class="title">应用名字：</div>
+      <div class="title">应用名字</div>
       <el-input
         v-model="appName"
         style="width: 40%"
@@ -255,11 +255,22 @@
       />
     </div>
     <div class="line">
-      <div class="title">原始列：</div>
+      <div class="title">
+        <div>源字段</div>
+        <div class="box-item">
+          <el-tooltip
+            effect="dark"
+            content="源字段只能为数字或文本类型"
+            placement="right-start"
+          >
+            <el-icon><WarningFilled /></el-icon>
+          </el-tooltip>
+        </div>
+      </div>
       <div>
         <el-select
           v-model="fieldId"
-          placeholder="请选择原始列"
+          placeholder="请选择源字段"
           size="large"
           clearable
         >
@@ -278,11 +289,22 @@
     </div>
 
     <div class="line">
-      <div class="title top">目标列：</div>
+      <div class="title top">
+        <div>目标字段</div>
+        <div class="box-item">
+          <el-tooltip
+            effect="dark"
+            content="目标字段只能为文本类型"
+            placement="right-start"
+          >
+            <el-icon><WarningFilled /></el-icon>
+          </el-tooltip>
+        </div>
+      </div>
       <div>
         <el-select
           v-model="areaId"
-          placeholder="请选择目标列"
+          placeholder="请选择目标字段"
           size="large"
           clearable
         >
@@ -352,15 +374,19 @@
 
 <style scoped>
   .title {
+    display: flex;
     font-size: 16px;
-    font-weight: 700;
     margin-bottom: 14px;
-    width: 100px;
+    width: 110px;
 
     &::before {
       content: '*';
       color: red;
       margin-right: 5px;
+    }
+
+    .box-item {
+      margin-left: 5px;
     }
   }
 
@@ -378,10 +404,6 @@
     display: flex;
     align-items: center;
     margin-bottom: 14px;
-  }
-
-  .area {
-    font-weight: 700;
   }
 
   .tip {
