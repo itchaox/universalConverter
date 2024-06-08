@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2024-06-08 14:33
+ * @LastTime   : 2024-06-08 19:20
  * @desc       : 
 -->
 <script setup>
@@ -375,7 +375,7 @@
     display: flex;
     font-size: 16px;
     margin-bottom: 14px;
-    width: 110px;
+    margin-right: 10px;
 
     &::before {
       content: '*';
