@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2024-06-08 01:02
+ * @LastTime   : 2024-06-08 12:25
  * @desc       : 
 -->
 <script setup>
@@ -26,7 +26,7 @@
   onMounted(async () => {
     const table = await base.getActiveTable();
     const tableMetaList = await table.getFieldMetaList();
-    fieldOptions.value = tableMetaList.map((item) => ({ value: item.id, label: item.name }));
+    fieldOptions.value = tableMetaList.map((item) => ({ value: item.id, label: item.name, type: item.type }));
   });
 
   async function confirm() {
@@ -97,14 +97,13 @@
     ElMessage({
       message: t('Data processing completed'),
       type: 'success',
+      duration: 500,
     });
   }
 
   const MonacoEditorRef = ref();
 
   const appName = ref('万能转换器');
-
-  const upload = () => {};
 
   const download = () => {
     const obj = {
@@ -132,6 +131,70 @@
     // 释放资源
     URL.revokeObjectURL(url);
   };
+
+  const isUpload = ref(false);
+  function upload() {
+    isUpload.value = true;
+  }
+
+  function cancelImport() {
+    isUpload.value = false;
+  }
+
+  // 上传之前的处理
+  function beforeUpload(file) {
+    // 检查文件类型
+    const isJSON = file.type === 'application/json';
+    if (!isJSON) {
+      ElMessage.error(t('Only supports uploading JSON files'));
+    }
+    return isJSON;
+  }
+
+  const codeValue = ref();
+
+  const temAppName = ref();
+  const temCodeValue = ref();
+
+  // 上传成功后的处理
+  function handleUploadSuccess(response, file) {
+    // 获取上传的文件名
+    const fileName = file[0].name;
+
+    // 截取以 .json 结尾的前面的数据
+    const lastIndex = fileName.lastIndexOf('.json');
+    const truncatedFileName = fileName.slice(0, lastIndex);
+
+    // 获取上传的 JSON 文件
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      // 将文件内容解析为 JavaScript 对象
+      const res = JSON.parse(e.target.result);
+      temCodeValue.value = res.codeValue;
+
+      temAppName.value = truncatedFileName;
+      ElMessage.success(t('File uploaded successfully'));
+    };
+
+    reader.readAsText(file[0].raw);
+  }
+
+  const uploadRef = ref();
+  async function confirmImport() {
+    appName.value = temAppName.value;
+    codeValue.value = temCodeValue.value;
+    isUpload.value = false;
+
+    ElMessage({
+      type: 'success',
+      message: `${t('Added successfully')}`,
+      duration: 1500,
+      showClose: true,
+    });
+
+    uploadRef.value.clearFiles();
+  }
 </script>
 
 <template>
@@ -166,7 +229,11 @@
           clearable
         >
           <el-option
-            v-for="item in fieldOptions?.filter((item) => item.value !== areaId)"
+            v-for="item in fieldOptions?.filter(
+              (item) =>
+                item.value !== areaId &&
+                [1, 2, 13, 15, 22, 1005, 99001, 99002, 99003, 99004, 99005].includes(item.type),
+            )"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -185,7 +252,7 @@
           clearable
         >
           <el-option
-            v-for="item in fieldOptions?.filter((item) => item.value !== fieldId)"
+            v-for="item in fieldOptions?.filter((item) => item.value !== fieldId && [1, 15, 22].includes(item.type))"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -198,13 +265,44 @@
     <MonacoEditor
       ref="MonacoEditorRef"
       class="editor"
+      :codeValue="codeValue"
     />
 
-    <!-- 
-    <div>
-      <span>是否保存在本地</span>
-      <el-switch>是否保存在本地</el-switch>
-    </div> -->
+    <!-- 导入方案 -->
+    <el-dialog
+      v-model="isUpload"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      @close="cancelImport"
+      :title="$t('upload Programs')"
+      width="75%"
+    >
+      <div class="addView">
+        <el-upload
+          ref="uploadRef"
+          drag
+          :http-request="() => {}"
+          :on-change="handleUploadSuccess"
+          :before-upload="beforeUpload"
+          :limit="1"
+        >
+          <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+          <div class="el-upload__text">
+            <em>{{ $t('drag') }}</em> {{ $t('or') }} <em>{{ $t('Click to upload a file') }}</em>
+          </div>
+        </el-upload>
+
+        <div>
+          <el-button
+            type="primary"
+            @click="confirmImport"
+            >{{ $t('confirm') }}</el-button
+          >
+
+          <el-button @click="cancelImport">{{ $t('cancel') }}</el-button>
+        </div>
+      </div>
+    </el-dialog>
 
     <el-button
       type="primary"

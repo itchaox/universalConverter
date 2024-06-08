@@ -9,33 +9,62 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, watchEffect, watch } from 'vue';
   import * as monaco from 'monaco-editor';
+
+  // 定义 props
+  const props = defineProps({
+    codeValue: String,
+  });
 
   // 创建一个 ref 用于存储编辑器容器
   const editorContainer = ref(null);
   let editor = null;
 
+  const defaultValue = `function helloWorld(data) {
+    const res = data + '成功了！！！'
+    return res
+  }`;
+
   // 在组件挂载时初始化 Monaco Editor
   onMounted(() => {
     editor = monaco.editor.create(editorContainer.value, {
-      value: `function helloWorld(data) {
-    return data = data + '成功了！！！'
-  }`,
+      value: defaultValue,
       language: 'javascript',
     });
   });
+
+  // 监听 props.codeValue 的变化，并更新编辑器的值
+  watch(
+    () => props.codeValue,
+    (newValue) => {
+      if (editor) {
+        const currentValue = editor.getValue();
+        if (currentValue !== newValue) {
+          editor.setValue(newValue);
+        }
+      }
+    },
+  );
 
   // 定义一个运行代码的函数
   const runCode = (data) => {
     const code = editor.getValue();
     try {
-      // 创建一个新的函数，包含用户代码并返回其定义的函数
-      const func = new Function(`${code}; return helloWorld;`);
-      // 执行函数，得到用户定义的 helloWorld 函数
-      const helloWorld = func();
-      // 调用用户定义的 helloWorld 函数
-      return helloWorld(data);
+      // 使用正则表达式提取函数名
+      const functionNameMatch = code.match(/function\s+([a-zA-Z_$][0-9a-zA-Z_$]*)\s*\(/);
+      if (!functionNameMatch) {
+        throw new Error('No function found in the code');
+      }
+
+      const functionName = functionNameMatch[1];
+      const func = new Function(`${code}; return ${functionName};`);
+
+      // 执行函数，得到用户定义的目标函数
+      const userFunction = func();
+
+      // 调用用户定义的目标函数, 全部转换成 string
+      return userFunction(data) + '';
     } catch (e) {
       console.error(e);
     }
