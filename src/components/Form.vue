@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2024-06-08 12:25
+ * @LastTime   : 2024-06-08 12:59
  * @desc       : 
 -->
 <script setup>
@@ -195,6 +195,10 @@
 
     uploadRef.value.clearFiles();
   }
+
+  const goUrl = (url) => {
+    window.open(url);
+  };
 </script>
 
 <template>
@@ -202,6 +206,25 @@
     v-loading="loading"
     :element-loading-text="$t('loading')"
   >
+    <div class="line">
+      <el-button
+        type="text"
+        @click="goUrl('https://bcmcjimpjd.feishu.cn/base/I7AWbeSTLafqaJsTJ4BcmCF2nMg?table=ldxyob7oZYiCcGzh')"
+        >使用指南</el-button
+      >
+      <el-button
+        type="text"
+        @click="
+          goUrl('https://bcmcjimpjd.feishu.cn/base/I7AWbeSTLafqaJsTJ4BcmCF2nMg?table=tblTZGKJTASSgsyF&view=vewh3S13Xh')
+        "
+        >查看已有应用</el-button
+      >
+      <el-button
+        type="text"
+        @click="goUrl('https://bcmcjimpjd.feishu.cn/share/base/form/shrcnVjZKkMAQCKmU9eFuuUv1rh')"
+        >提交应用</el-button
+      >
+    </div>
     <div class="line">
       <el-button
         type="primary"
@@ -262,6 +285,7 @@
     </div>
 
     <h2>代码编辑区域</h2>
+    <div>* 仅支持 js 代码</div>
     <MonacoEditor
       ref="MonacoEditorRef"
       class="editor"
