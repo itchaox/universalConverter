@@ -13,5 +13,20 @@
   "Program Name": "应用名字",
   "Please enter the name of the program": "请输入应用名字",
   "run": "运行",
-  "Added successfully": "导入成功"
+  "Added successfully": "导入成功",
+  "p1": "请选择源字段",
+  "p2": "请选择目标字段",
+  "p3": "万能转换器",
+  "shi-yong-zhi-nan": "使用指南",
+  "cha-kan-yi-you-ying-yong": "查看已有应用",
+  "ti-jiao-ying-yong": "提交应用",
+  "dao-ru-ying-yong": "导入应用",
+  "dao-chu-ying-yong": "导出应用",
+  "yuan-zi-duan": "源字段",
+  "mu-biao-zi-duan": "目标字段",
+  "dai-ma-bian-ji-qu-yu": "代码编辑区域",
+  "jin-zhi-chi-js-dai-ma": "(仅支持 js 代码)",
+  "mu-biao-zi-duan-zhi-neng-wei-wen-ben-lei-xing": "目标字段只能为文本类型",
+  "yuan-zi-duan-zhi-neng-wei-shu-zi-huo-wen-ben-lei-xing": "源字段只能为数字或文本类型",
+  "Data processing completed": "数据处理完成"
 }

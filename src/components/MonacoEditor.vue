@@ -22,6 +22,7 @@
   let editor = null;
 
   const defaultValue = `function helloWorld(data) {
+  // Some notes
     const res = data + 'some message!'
     return res
   }`;

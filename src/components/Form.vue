@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2024-06-08 14:21
+ * @LastTime   : 2024-06-08 14:33
  * @desc       : 
 -->
 <script setup>
@@ -33,7 +33,7 @@
     if (!appName.value) {
       ElMessage({
         type: 'error',
-        message: '请输入应用名字',
+        message: t('Please enter the name of the program'),
       });
       return;
     }
@@ -41,7 +41,7 @@
     if (!fieldId.value) {
       ElMessage({
         type: 'error',
-        message: '请选择原始列',
+        message: t('p1'),
       });
       return;
     }
@@ -49,7 +49,7 @@
     if (!areaId.value) {
       ElMessage({
         type: 'error',
-        message: '请选择目标列',
+        message: t('p2'),
       });
       return;
     }
@@ -57,12 +57,8 @@
     generateBirthdayRow();
   }
 
-  // 所属地列
   const areaId = ref();
 
-  /**
-   * @desc  : 生成手机号码所属地列
-   */
   async function generateBirthdayRow() {
     loading.value = true;
 
@@ -103,7 +99,7 @@
 
   const MonacoEditorRef = ref();
 
-  const appName = ref('万能转换器');
+  const appName = ref(t('p3'));
 
   const download = () => {
     const obj = {
@@ -212,7 +208,7 @@
         @click="goUrl('https://bcmcjimpjd.feishu.cn/base/I7AWbeSTLafqaJsTJ4BcmCF2nMg?table=ldxyob7oZYiCcGzh')"
       >
         <el-icon style="margin-right: 2px"><Notebook /></el-icon>
-        使用指南</el-button
+        {{ $t('shi-yong-zhi-nan') }}</el-button
       >
       <el-button
         type="text"
@@ -221,14 +217,14 @@
         "
       >
         <el-icon style="margin-right: 2px"> <HomeFilled /></el-icon>
-        查看已有应用</el-button
+        {{ $t('cha-kan-yi-you-ying-yong') }}</el-button
       >
       <el-button
         type="text"
         @click="goUrl('https://bcmcjimpjd.feishu.cn/share/base/form/shrcnVjZKkMAQCKmU9eFuuUv1rh')"
       >
         <el-icon style="margin-right: 2px"><UploadFilled /></el-icon>
-        提交应用</el-button
+        {{ $t('ti-jiao-ying-yong') }}</el-button
       >
     </div>
     <div class="line">
@@ -237,30 +233,30 @@
         @click="upload"
       >
         <el-icon style="margin-right: 2px"><Upload /></el-icon>
-        导入应用</el-button
+        {{ $t('dao-ru-ying-yong') }}</el-button
       >
       <el-button @click="download">
         <el-icon style="margin-right: 2px"><Download /></el-icon>
-        导出应用</el-button
+        {{ $t('dao-chu-ying-yong') }}</el-button
       >
     </div>
     <div class="line">
-      <div class="title">应用名字</div>
+      <div class="title">{{ $t('Program Name') }}</div>
       <el-input
         v-model="appName"
         style="width: 40%"
         size="large"
         clearable
-        placeholder="请输入应用名字"
+        :placeholder="$t('Please enter the name of the program')"
       />
     </div>
     <div class="line">
       <div class="title">
-        <div>源字段</div>
+        <div>{{ $t('yuan-zi-duan') }}</div>
         <div class="box-item">
           <el-tooltip
             effect="dark"
-            content="源字段只能为数字或文本类型"
+            :content="$t('yuan-zi-duan-zhi-neng-wei-shu-zi-huo-wen-ben-lei-xing')"
             placement="right-start"
           >
             <el-icon><WarningFilled /></el-icon>
@@ -270,7 +266,7 @@
       <div>
         <el-select
           v-model="fieldId"
-          placeholder="请选择源字段"
+          :placeholder="$t('p1')"
           size="large"
           clearable
         >
@@ -290,11 +286,11 @@
 
     <div class="line">
       <div class="title top">
-        <div>目标字段</div>
+        <div>{{ $t('mu-biao-zi-duan') }}</div>
         <div class="box-item">
           <el-tooltip
             effect="dark"
-            content="目标字段只能为文本类型"
+            :content="$t('mu-biao-zi-duan-zhi-neng-wei-wen-ben-lei-xing')"
             placement="right-start"
           >
             <el-icon><WarningFilled /></el-icon>
@@ -304,7 +300,7 @@
       <div>
         <el-select
           v-model="areaId"
-          placeholder="请选择目标字段"
+          :placeholder="$t('p2')"
           size="large"
           clearable
         >
@@ -318,7 +314,9 @@
       </div>
     </div>
 
-    <div class="area">代码编辑区域 <span class="tip">(仅支持 js 代码)</span></div>
+    <div class="area">
+      {{ $t('dai-ma-bian-ji-qu-yu') }} <span class="tip">{{ $t('jin-zhi-chi-js-dai-ma') }}</span>
+    </div>
     <MonacoEditor
       ref="MonacoEditorRef"
       class="editor"
