@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2024-06-08 12:59
+ * @LastTime   : 2024-06-08 13:32
  * @desc       : 
 -->
 <script setup>
@@ -210,28 +210,39 @@
       <el-button
         type="text"
         @click="goUrl('https://bcmcjimpjd.feishu.cn/base/I7AWbeSTLafqaJsTJ4BcmCF2nMg?table=ldxyob7oZYiCcGzh')"
-        >使用指南</el-button
+      >
+        <el-icon style="margin-right: 2px"><Notebook /></el-icon>
+        使用指南</el-button
       >
       <el-button
         type="text"
         @click="
           goUrl('https://bcmcjimpjd.feishu.cn/base/I7AWbeSTLafqaJsTJ4BcmCF2nMg?table=tblTZGKJTASSgsyF&view=vewh3S13Xh')
         "
-        >查看已有应用</el-button
+      >
+        <el-icon style="margin-right: 2px"> <HomeFilled /></el-icon>
+        查看已有应用</el-button
       >
       <el-button
         type="text"
         @click="goUrl('https://bcmcjimpjd.feishu.cn/share/base/form/shrcnVjZKkMAQCKmU9eFuuUv1rh')"
-        >提交应用</el-button
+      >
+        <el-icon style="margin-right: 2px"><UploadFilled /></el-icon>
+        提交应用</el-button
       >
     </div>
     <div class="line">
       <el-button
         type="primary"
         @click="upload"
-        >导入应用</el-button
       >
-      <el-button @click="download">导出应用</el-button>
+        <el-icon style="margin-right: 2px"><Upload /></el-icon>
+        导入应用</el-button
+      >
+      <el-button @click="download">
+        <el-icon style="margin-right: 2px"><Download /></el-icon>
+        导出应用</el-button
+      >
     </div>
     <div class="line">
       <div class="title">应用名字：</div>
@@ -240,6 +251,7 @@
         style="width: 40%"
         size="large"
         clearable
+        placeholder="请输入应用名字"
       />
     </div>
     <div class="line">
@@ -284,8 +296,7 @@
       </div>
     </div>
 
-    <h2>代码编辑区域</h2>
-    <div>* 仅支持 js 代码</div>
+    <div class="area">代码编辑区域 <span class="tip">(仅支持 js 代码)</span></div>
     <MonacoEditor
       ref="MonacoEditorRef"
       class="editor"
@@ -367,5 +378,14 @@
     display: flex;
     align-items: center;
     margin-bottom: 14px;
+  }
+
+  .area {
+    font-weight: 700;
+  }
+
+  .tip {
+    color: red;
+    font-size: 12px;
   }
 </style>

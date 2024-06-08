@@ -2,7 +2,7 @@
   <div>
     <div
       ref="editorContainer"
-      style="height: 50vh"
+      style="height: 35vh"
     ></div>
     <!-- <button @click="runCode('my name')">Run Code</button> -->
   </div>
