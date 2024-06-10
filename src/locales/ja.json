@@ -28,5 +28,9 @@
   "jin-zhi-chi-js-dai-ma": "(JSコードのみ対応)",
   "mu-biao-zi-duan-zhi-neng-wei-wen-ben-lei-xing": "ターゲットフィールドはテキストタイプのみです",
   "yuan-zi-duan-zhi-neng-wei-shu-zi-huo-wen-ben-lei-xing": "ソースフィールドは数字かテキストタイプのみです",
-  "Data processing completed": "データ処理完了"
+  "Data processing completed": "データ処理完了",
+  "shu-ju-biao": "テーブル",
+  "qing-xuan-ze-shu-ju-biao": "データシートを選択してください",
+  "shi-tu": "ビュー",
+  "qing-xuan-ze-shi-tu": "ビューを選択してください"
 }

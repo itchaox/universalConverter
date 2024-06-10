@@ -28,5 +28,9 @@
   "jin-zhi-chi-js-dai-ma": "(仅支持 js 代码)",
   "mu-biao-zi-duan-zhi-neng-wei-wen-ben-lei-xing": "目标字段只能为文本类型",
   "yuan-zi-duan-zhi-neng-wei-shu-zi-huo-wen-ben-lei-xing": "源字段只能为数字或文本类型",
-  "Data processing completed": "数据处理完成"
+  "Data processing completed": "数据处理完成",
+  "shu-ju-biao": "数据表",
+  "qing-xuan-ze-shu-ju-biao": "请选择数据表",
+  "shi-tu": "视图",
+  "qing-xuan-ze-shi-tu": "请选择视图"
 }

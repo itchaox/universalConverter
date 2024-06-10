@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2024-06-10 14:40
+ * @LastTime   : 2024-06-10 14:46
  * @desc       : 
 -->
 <script setup>
@@ -295,13 +295,13 @@
 
     <div class="line">
       <div class="title">
-        <div>数据表</div>
+        <div>{{ $t('shu-ju-biao') }}</div>
       </div>
       <div style="width: 100%">
         <el-select
           style="width: 100%"
           v-model="tableId"
-          placeholder="请选择数据表"
+          :placeholder="$t('qing-xuan-ze-shu-ju-biao')"
           size="large"
           clearable
           filterable
@@ -318,13 +318,13 @@
 
     <div class="line">
       <div class="title">
-        <div>视图</div>
+        <div>{{ $t('shi-tu') }}</div>
       </div>
       <div style="width: 100%">
         <el-select
           style="width: 100%"
           v-model="viewId"
-          placeholder="请选择视图"
+          :placeholder="$t('qing-xuan-ze-shi-tu')"
           size="large"
           clearable
           filterable

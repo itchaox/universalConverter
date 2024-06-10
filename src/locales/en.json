@@ -28,5 +28,9 @@
   "jin-zhi-chi-js-dai-ma": "(Supports Only JS Code)",
   "mu-biao-zi-duan-zhi-neng-wei-wen-ben-lei-xing": "Target Field Can Only Be Text Type",
   "yuan-zi-duan-zhi-neng-wei-shu-zi-huo-wen-ben-lei-xing": "Source Field Can Only Be Number Or Text Type",
-  "Data processing completed": "Data Processing Completed"
+  "Data processing completed": "Data Processing Completed",
+  "shu-ju-biao": "Table",
+  "qing-xuan-ze-shu-ju-biao": "Please Select A Table",
+  "shi-tu": "View",
+  "qing-xuan-ze-shi-tu": "Please Select A View"
 }
