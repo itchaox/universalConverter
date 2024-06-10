@@ -3,11 +3,11 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2024-06-10 11:50
+ * @LastTime   : 2024-06-10 14:35
  * @desc       : 
 -->
 <script setup>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, watch } from 'vue';
   import { bitable, FieldType, DateFormatter } from '@lark-base-open/js-sdk';
   import { ElMessage, ElMessageBox } from 'element-plus';
 
@@ -23,11 +23,52 @@
 
   const loading = ref(false);
 
+  const tableId = ref('');
+  const tableList = ref([]);
+
+  const viewId = ref('');
+  const viewList = ref([]);
+
   onMounted(async () => {
+    // 数据表列表
+    const tableMetaList = await base.getTableMetaList();
+    tableList.value = tableMetaList.map((item) => ({ value: item.id, label: item.name }));
+
+    // 获取字段列表
     const table = await base.getActiveTable();
-    const tableMetaList = await table.getFieldMetaList();
-    fieldOptions.value = tableMetaList.map((item) => ({ value: item.id, label: item.name, type: item.type }));
+
+    // 视图列表
+    const viewMetaList = await table.getViewMetaList();
+    viewList.value = viewMetaList.map((item) => ({ value: item.id, label: item.name }));
+
+    const view = await table.getActiveView();
+
+    viewId.value = view.id;
+    tableId.value = table.id;
+
+    const viewFieldList = await view.getFieldMetaList();
+    fieldOptions.value = viewFieldList.map((item) => ({ value: item.id, label: item.name, type: item.type }));
   });
+
+  watch(
+    () => tableId.value,
+    async (newTableId) => {
+      const table = await bitable.base.getTable(newTableId);
+      const viewMetaList = await table.getViewMetaList();
+      viewList.value = viewMetaList.map((item) => ({ value: item.id, label: item.name }));
+      viewId.value = viewList?.value[0]?.value;
+    },
+  );
+
+  watch(
+    () => viewId.value,
+    async (newViewId) => {
+      const table = await bitable.base.getTable(tableId.value);
+      const view = await table.getViewById(newViewId);
+      const viewFieldList = await view.getFieldMetaList();
+      fieldOptions.value = viewFieldList.map((item) => ({ value: item.id, label: item.name, type: item.type }));
+    },
+  );
 
   async function confirm() {
     if (!appName.value) {
@@ -252,6 +293,49 @@
         :placeholder="$t('Please enter the name of the program')"
       />
     </div>
+
+    <div class="line">
+      <div class="title">
+        <div>数据表</div>
+      </div>
+      <div>
+        <el-select
+          v-model="tableId"
+          placeholder="请选择数据表"
+          size="large"
+          clearable
+        >
+          <el-option
+            v-for="item in tableList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </div>
+    </div>
+
+    <div class="line">
+      <div class="title">
+        <div>视图</div>
+      </div>
+      <div>
+        <el-select
+          v-model="viewId"
+          placeholder="请选择视图"
+          size="large"
+          clearable
+        >
+          <el-option
+            v-for="item in viewList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </div>
+    </div>
+
     <div class="line">
       <div class="title">
         <div>{{ $t('yuan-zi-duan') }}</div>
@@ -287,7 +371,7 @@
     </div>
 
     <div class="line">
-      <div class="title top">
+      <div class="title">
         <div>{{ $t('mu-biao-zi-duan') }}</div>
         <div class="box-item">
           <el-tooltip
@@ -376,7 +460,6 @@
   .title {
     display: flex;
     font-size: 16px;
-    margin-bottom: 14px;
     margin-right: 10px;
     min-width: 100px;
 
@@ -404,7 +487,7 @@
   .line {
     display: flex;
     align-items: center;
-    margin-bottom: 14px;
+    margin-bottom: 20px;
   }
 
   .tip {
