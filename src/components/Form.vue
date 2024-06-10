@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2024-06-10 14:35
+ * @LastTime   : 2024-06-10 14:40
  * @desc       : 
 -->
 <script setup>
@@ -287,7 +287,6 @@
       <div class="title">{{ $t('Program Name') }}</div>
       <el-input
         v-model="appName"
-        style="width: 60%"
         size="large"
         clearable
         :placeholder="$t('Please enter the name of the program')"
@@ -298,12 +297,14 @@
       <div class="title">
         <div>数据表</div>
       </div>
-      <div>
+      <div style="width: 100%">
         <el-select
+          style="width: 100%"
           v-model="tableId"
           placeholder="请选择数据表"
           size="large"
           clearable
+          filterable
         >
           <el-option
             v-for="item in tableList"
@@ -319,12 +320,14 @@
       <div class="title">
         <div>视图</div>
       </div>
-      <div>
+      <div style="width: 100%">
         <el-select
+          style="width: 100%"
           v-model="viewId"
           placeholder="请选择视图"
           size="large"
           clearable
+          filterable
         >
           <el-option
             v-for="item in viewList"
@@ -349,12 +352,14 @@
           </el-tooltip>
         </div>
       </div>
-      <div>
+      <div style="width: 100%">
         <el-select
+          style="width: 100%"
           v-model="fieldId"
           :placeholder="$t('p1')"
           size="large"
           clearable
+          filterable
         >
           <el-option
             v-for="item in fieldOptions?.filter(
@@ -383,12 +388,14 @@
           </el-tooltip>
         </div>
       </div>
-      <div>
+      <div style="width: 100%">
         <el-select
+          style="width: 100%"
           v-model="areaId"
           :placeholder="$t('p2')"
           size="large"
           clearable
+          filterable
         >
           <el-option
             v-for="item in fieldOptions?.filter((item) => item.value !== fieldId && [1, 15, 22].includes(item.type))"
