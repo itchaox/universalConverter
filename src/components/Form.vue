@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-09-26 15:10
  * @LastAuthor : itchaox
- * @LastTime   : 2024-06-08 19:20
+ * @LastTime   : 2024-06-10 11:50
  * @desc       : 
 -->
 <script setup>
@@ -99,7 +99,9 @@
 
   const MonacoEditorRef = ref();
 
-  const appName = ref(t('p3'));
+  // const appName = ref(t('p3'));
+
+  const appName = ref('hexToDecimal');
 
   const download = () => {
     const obj = {
@@ -244,7 +246,7 @@
       <div class="title">{{ $t('Program Name') }}</div>
       <el-input
         v-model="appName"
-        style="width: 40%"
+        style="width: 60%"
         size="large"
         clearable
         :placeholder="$t('Please enter the name of the program')"
@@ -376,6 +378,7 @@
     font-size: 16px;
     margin-bottom: 14px;
     margin-right: 10px;
+    min-width: 100px;
 
     &::before {
       content: '*';

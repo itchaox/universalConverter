@@ -31,11 +31,17 @@
   const editorContainer = ref(null);
   let editor = null;
 
-  const defaultValue = `function helloWorld(data) {
-  // Some notes
-    const res = data + 'some message!'
-    return res
-  }`;
+  const defaultValue = `function hexToDecimal(hexString) {
+  // 使用 parseInt 将16进制字符串转换为10进制数
+  const decimalNumber = parseInt(hexString, 16);
+
+  // 检查转换后的结果是否为NaN（表示输入不是一个有效的16进制数）
+  if (isNaN(decimalNumber)) {
+    throw new Error('Invalid hex number');
+  }
+
+  return decimalNumber;
+}`;
 
   // 在组件挂载时初始化 Monaco Editor
   onMounted(() => {
